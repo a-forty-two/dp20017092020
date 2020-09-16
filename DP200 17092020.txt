@@ -1,0 +1,190 @@
+Deploy:
+1) DataLake (search Storage Account)
+	-> Advanced
+		-> Heirarchial namespace: enabled
+2) DataBricks
+	-> Premium 14 day trial - free DBUs
+
+(Same Resource Group please)
+
+- Access private enterprise data
+	1) Shared Access Signature
+	2) Role Based Access Control + Enterprise App
+	3) KeyVault 
+
+key1: 
+
+Ly5YcugXnqVtQe2OxVlhabxbtW2FlXz/lXR7HgHRJ8lOg6ASSggub/EtVNyEUvinkunEVon+nESOGiihHwcC3Q==
+
+storage account name: databrickslake123
+container: forworkshop
+blob storage: databrickslake123.blob.core.windows.net
+
+KeyVault Secret: lakesecretkey
+Datalake Secret: datalakescope
+
+
+
+imperative ---------------- declarative
+
+a=1        a=?      1         True (builds DAG-> no exec)
+b=2        b=?     2          True (builds DAG-> no exec)
+c=a+b      c=?     3          True (builds DAG-> no exec)
+print(c)   ??      "3"        Execution-> output
+
+
+Backend for web/mobile-> OLTP-> SQL DB 
+
+Analysis-> 
+	-> Orchestration, notebooks, spark like programming,
+	SQL, R, Scala, PySpark=> DataBricks
+
+	-> High Availability, semi-structured, 
+		-> SQL DW-> on 24X7-> paying for entirety 
+			-> already SQL skillsets 
+
+	-> COSMOS-> Bills for performance-> PER COLLECTION
+		-> API wrapper on top of core sql, mongoDB api,
+	columnar databases (CASSANDRA) 
+
+
+
+
+-> relational and non relational DBs
+	-> SQL DB-> demo-> TDE, Data Masking
+	-> CosmosDB-> MongoDB API -> global distribution 
+	-> SQL DW-> data analysis 
+
+Tomorrow-> DataFactory-> end to end with DataFlow (transformations)
+	DataBricks-> end to end orchestration
+	-> Monitoring, Diagnostics 
+***************************************
+- TDE-> Encryp. data at rest
+
+1) Windows OS-> Data Protection API 
+	-> Service Master Key
+	(this is b/w OS and SQL server)
+2) SQL server + SMK -> Database Master Key 
+	(this is on SQL server)
+3) Use DMK to create a encry/decry certificate
+	(this is on SQL server)
+4) use certi to create a Database ENCRYPTION Key (DEK)
+	
+CREATE MASTER KEY ENCRYPTION BY PASSWORD='myStr0ngpassword';
+CREATE CERTIFICATE mycerti WITH SUBJECT ='My certificate';
+CREATE DATABASE ENCRYPTION KEY WITH ALGORITHM = AES_128 
+ENCRYPTION BY SERVER CERTIFICATE mycerti; 
+use yourdbname;
+ALTER DATABASE yourdbname SET ENCRYPTION ON;
+
+TLS-> transport Layer Security
+	-> enforce a MINIMUM TLS version
+	-> + SSL and NO HTTP = encryption in motion
+
+TDE-> encryption of data at rest
+
+
+-> Distributing the tables
+	-> Round Robin 
+	-> Hash distributed-> improve performance during search
+	-> replication -> fault tolerance 
+
+OLAP-> objective of table is already defined
+	-> searching 
+	-> visualizing
+	-> temp hostages
+
+Stream Analytics-> On Edge (On device) or on cloud
+
+
+10:40 AM-> next topic (orchestration using Data Factory)
+	- We've already seen that ADF can be used to migrate
+		(COPY) data
+	- now we'll enhance the copied data with transformations
+		using Dataflow
+
+	-> DataFactory or DataFlow-> always DAG!
+	-> TF, Apache Spark, Airflow, Beam-> all DAG!
+	-> Any pipeline, big data solution, graph-> all DAG!
+
+Directed Cyclic Graph
+
+iif(condition, expression_truth, expression_false)
+
+
+HDInsight-> Service that manages CLUSTERS
+	- Big data payloads 
+	- payload is already often defined
+		- optimize our processes and h/w to dedicate
+		- using combinations we can achieved desired 
+			results
+	- Spark + Kafka-> streaming
+	- Hadoop-> real-time processing and storage
+	- Spark-> In memory data analytics
+	- Kafka-> Build a streaming solution
+		-> just for simple stream? Event Hub!
+			-> Event hub has Kafka enablement 
+	- Storm-> High speed parallel stream processing
+	- Hive-> semi-structured SQL-style warehouse
+			-> JSON and ARRAYS 
+		-> only have SQL expertise and no other 
+	requirements except analytics-> Interactive Query
+		-> multiple services to work together
+			- Map Reduce, Hive queries
+			-> Hadoop and use Hive on top
+
+-> DataFactory + StreamAnalytics
+	-> on-prem
+	-> ADF: Int. Runtimes
+	-> Stream Analytics: Edge Compute 
+
+IoT Hub, Event Hub-> capable of running on-prem 
+Azure Allows:
+	- Software based VPN- Slowest and least preferred
+	- Point to Site VPN- relies on internet
+		- hence requires encryption
+		- slower performance 
+	- ExpressRoute-> dedicated peering b/w Az region and 
+		your data center
+		- ultra-high speed connection- TRUSTED
+		- NO encryption -> VERY high speed for 
+			transfers/transformations
+https://azure.microsoft.com/en-in/blog/expressroute-or-virtual-network-vpn-whats-right-for-me/
+
+MOnitoring:
+	- APplication Insight-> Containers and WEb services
+
+
+- 700 out of 1000 to pass
+- no way to find individual scores
+
+
+- TDE, Monitoring and Logging-> Log analytics and Monitor, 
+	HDInsight- which cluster to use when?
+	when IoT and when Event Hub
+	Stream Analytics, DataFactory, IoT Hub- onprem v/s cloud deci
+	Datawarehouse v/s database (OLAP v/s OLTP)
+	CosmosDB- Consistency levels, Global availability, Fault 
+		tolerance
+	DataBricks-> Cluster properties, Automation notebook,
+		Key vault integration, Datalake integrationb
+	DB- TDE, TLS (min.) 
+	CosmosDB- Gremlin (Graphs, Edges, Vertices, tranportation,...)
+		- Cassandra (Columnar databases)
+		- Azure Tables (no sql style, key-value pairs)
+	Orchestration-> DataFactory or DataBricks 
+	Orchestration with Notebooks-> DataBricks
+	Orchestration with triggers/pipelines/activities-> DataFactory
+
+
+
+ 
+		
+	- HBase-> NoSQL warehouse 
+	- Interactive Query-> SQL on web browser directly
+		-(hidden hadoop running SQL context)
+	- R studio for ML clusters
+
+All labs:
+https://github.com/MicrosoftLearning/DP-200-Implementing-an-Azure-Data-Solution/tree/master/instructions
+
